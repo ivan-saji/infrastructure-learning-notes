@@ -1,0 +1,265 @@
+🧱 STEP 1 — Create Project Folder
+
+Inside your local projects directory:
+
+mkdir terraform-azure-learning
+cd terraform-azure-learning
+Create First Learning Folder
+mkdir 01-resource-group
+cd 01-resource-group
+
+Your structure becomes:
+
+terraform-azure-learning/
+└── 01-resource-group/
+🧱 STEP 2 — Verify Terraform Installation
+
+Run:
+
+terraform version
+
+Expected:
+
+Terraform v1.x.x
+
+If not installed:
+Install from:
+Terraform Downloads
+
+🧱 STEP 3 — Install Azure CLI
+
+Check:
+
+az version
+
+If missing:
+Install from:
+Azure CLI Install Guide
+
+🧱 STEP 4 — Login To Azure
+
+This is VERY important.
+
+Run:
+
+az login
+
+Browser opens.
+
+Login using your Azure account.
+
+✅ Verify Login
+
+Run:
+
+az account show
+
+This shows:
+
+subscription
+tenant
+account info
+
+Terraform will use THIS login session.
+
+🧠 IMPORTANT CONCEPT
+How Terraform Talks To Azure
+Terraform
+   ↓
+AzureRM Provider
+   ↓
+Azure CLI Authentication
+   ↓
+Azure APIs
+
+Terraform itself cannot manage Azure.
+
+The AzureRM provider acts as bridge.
+
+🧱 STEP 5 — Open VSCode
+
+Inside folder:
+
+code .
+
+Now create file:
+
+main.tf
+
+IMPORTANT:
+Terraform files use:
+
+.tf
+
+extension.
+
+🧱 STEP 6 — Write Terraform Configuration
+
+Inside main.tf:
+
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "demo-rg" {
+  name     = "rg-terraform-demo"
+  location = "Central India"
+}
+🧠 UNDERSTAND THIS CODE PROPERLY
+Part 1 — Terraform Block
+terraform {
+}
+
+Defines:
+
+required providers
+versions
+backend settings later
+Part 2 — AzureRM Provider
+azurerm
+
+This tells Terraform:
+
+“We are working with Azure.”
+
+Part 3 — Provider Block
+provider "azurerm" {
+  features {}
+}
+
+Initializes Azure provider.
+
+features {} is mandatory placeholder config.
+
+Part 4 — Resource Block
+resource "azurerm_resource_group" "demo-rg"
+
+VERY IMPORTANT.
+
+Format:
+
+resource "RESOURCE_TYPE" "LOCAL_NAME"
+RESOURCE TYPE
+azurerm_resource_group
+
+Actual Azure resource.
+
+LOCAL NAME
+demo-rg
+
+Terraform internal reference name.
+
+NOT Azure name.
+
+Actual Azure Name
+name = "rg-terraform-demo"
+
+This appears in Azure Portal.
+
+🧱 STEP 7 — Initialize Terraform
+
+VERY important step.
+
+Run:
+
+terraform init
+What Happens Internally
+
+Terraform:
+
+downloads AzureRM provider
+creates .terraform/
+creates lock file
+
+You’ll see:
+
+.terraform/
+terraform.lock.hcl
+🧠 IMPORTANT
+.terraform
+
+Stores provider binaries/plugins.
+
+terraform.lock.hcl
+
+Locks provider versions for consistency.
+
+Commit this file to GitHub.
+
+🧱 STEP 8 — Validate Configuration
+
+Run:
+
+terraform validate
+
+Expected:
+
+Success! The configuration is valid.
+🧱 STEP 9 — Preview Changes
+
+Run:
+
+terraform plan
+
+VERY IMPORTANT command.
+
+This shows:
+
+what Terraform WILL do
+before actually doing it
+
+You’ll see:
+
+Plan: 1 to add, 0 to change, 0 to destroy
+🧠 IMPORTANT CONCEPT
+
+Terraform compares:
+
+Desired State
+vs
+Current State
+
+Then generates execution plan.
+
+🧱 STEP 10 — Deploy Infrastructure
+
+Run:
+
+terraform apply
+
+Terraform asks:
+
+Do you want to perform these actions?
+
+Type:
+
+yes
+🎉 SUCCESS
+
+Terraform creates:
+
+rg-terraform-demo
+
+inside Azure.
+
+🧱 STEP 11 — Verify In Azure Portal
+
+Go to:
+Azure Portal
+
+Search:
+
+Resource Groups
+
+You should see:
+
+rg-terraform-demo
