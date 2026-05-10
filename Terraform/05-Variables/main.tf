@@ -29,11 +29,27 @@ variable "environment" {
   default     = "dev"
 }
 
+# Using variable for environment tag and local variable for common tags
+output "StorageAccountName" {
+  description = "The name of the storage account created."
+  value       = azurerm_storage_account.storage01.name
+}
+
+
+locals {
+  common_tags = {
+    created_by = "Ivan"
+  }
+}
+
+
+
 resource "azurerm_resource_group" "rg01" {
   name     = "tf-rg-01"
   location = var.location
   tags = {
     environment = var.environment
+    created_by = local.common_tags.created_by
   }
 }
 
@@ -44,6 +60,7 @@ resource "azurerm_storage_account" "storage01" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   tags = {
-    environment = var.environment
+    environment = var.environment                   #Using variable for environment tag
+    created_by = local.common_tags.created_by       # Using local variable for common tag
   }
 }
