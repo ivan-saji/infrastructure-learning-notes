@@ -1,0 +1,227 @@
+Types of Variables in Terraform
+
+Terraform supports:
+
+Input Variables
+Local Variables
+Environment Variables
+Variable Files (.tfvars)
+Runtime Variables (-var)
+Output Variables
+📥 1️⃣ Input Variables
+
+Used to accept dynamic values from users.
+
+Syntax
+variable "location" {
+  type    = string
+  default = "Central India"
+}
+Usage
+location = var.location
+🧠 Important Concepts
+var.
+
+Accesses input variable values.
+
+Example:
+
+var.location
+Default Values
+
+If no value is supplied:
+Terraform uses:
+
+default
+📄 Example
+variable "resource_group_name" {
+  type = string
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = var.location
+}
+📁 2️⃣ Variable Files (terraform.tfvars)
+
+Used to store variable values separately.
+
+Example
+resource_group_name = "tf-rg-demo"
+location            = "Central India"
+Usage
+
+Terraform automatically loads:
+
+terraform.tfvars
+Custom Variable File
+terraform plan -var-file="dev.tfvars"
+
+Useful for:
+
+dev
+test
+prod environments
+🖥️ 3️⃣ Runtime Variables (-var)
+
+Variables can be passed during execution.
+
+Example
+terraform plan -var="location=South India"
+Use Cases
+
+Useful for:
+
+quick testing
+CI/CD pipelines
+temporary overrides
+🌍 4️⃣ Environment Variables
+
+Terraform automatically reads variables from environment variables.
+
+Format:
+
+TF_VAR_variableName
+Example
+
+Linux:
+
+export TF_VAR_location="Central India"
+
+Terraform:
+
+variable "location" {}
+
+Automatically receives value.
+
+Use Cases
+
+Useful for:
+
+secrets
+CI/CD
+automation
+🧠 Variable Precedence Order
+
+If same variable exists in multiple places:
+
+Terraform follows precedence.
+
+Highest priority wins.
+
+Variable Precedence (Highest → Lowest)
+1. Runtime variable (-var)
+2. Variable file (-var-file)
+3. terraform.tfvars
+4. Environment variables
+5. Default variable values
+Example
+
+Suppose:
+
+default = "East US"
+
+but:
+
+terraform plan -var="location=Central India"
+
+Terraform uses:
+
+Central India
+
+because runtime variable has higher precedence.
+
+🧱 5️⃣ Local Variables (locals)
+
+Locals are internal reusable values.
+
+Used for:
+
+reducing repetition
+improving readability
+computed values
+Syntax
+locals {
+  common_tags = {
+    environment = "dev"
+    owner       = "terraform"
+  }
+}
+Usage
+tags = local.common_tags
+🧠 Difference Between Variables & Locals
+Variables
+
+Input from outside.
+
+User configurable
+Locals
+
+Defined internally.
+
+Reusable internal values
+📤 6️⃣ Output Variables
+
+Outputs display useful information after deployment.
+
+Syntax
+output "resource_group_name" {
+  value = azurerm_resource_group.rg.name
+}
+Example Output
+
+After:
+
+terraform apply
+
+Terraform displays:
+
+resource_group_name = "tf-rg-demo"
+Use Cases
+
+Useful for:
+
+resource IDs
+public IPs
+storage names
+VM details
+inter-module communication
+🧠 Useful Terraform Commands
+Format Code
+terraform fmt
+
+Formats Terraform files properly.
+
+Validate Syntax
+terraform validate
+
+Checks configuration validity.
+
+Show Current Outputs
+terraform output
+🚀 Example Project Structure
+project/
+├── main.tf
+├── variables.tf
+├── terraform.tfvars
+├── outputs.tf
+└── .gitignore
+🚫 Best Practices
+Never Commit
+*.tfstate
+*.tfvars
+
+especially if containing secrets.
+
+Use Variables For
+locations
+names
+SKUs
+environments
+
+Avoid hardcoding values.
+
+Use Locals For
+common tags
+naming patterns
+reusable expressions
