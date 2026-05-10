@@ -1,0 +1,177 @@
+Short Notes — Terraform State & Remote Backend
+What Is Terraform State?
+
+Terraform stores infrastructure information in a file called:
+
+terraform.tfstate
+
+This file acts as Terraform’s memory.
+
+It stores:
+
+created resources
+resource IDs
+metadata
+dependencies
+current infrastructure state
+
+Terraform compares:
+
+Desired State
+vs
+Current State
+
+using the state file.
+
+Why Is State Important?
+
+Without state:
+
+Terraform cannot track resources
+cannot detect changes
+may recreate infrastructure incorrectly
+
+State enables:
+
+idempotency
+incremental updates
+dependency tracking
+Problem With Local State
+
+By default:
+
+terraform.tfstate
+
+is stored locally.
+
+Problems:
+
+not shared across team
+risk of accidental deletion
+no centralized management
+difficult collaboration
+Remote Backend
+
+To solve this, Terraform supports:
+
+Remote Backends
+
+A backend stores Terraform state remotely.
+
+In Azure:
+
+Azure Storage Account
+Blob Container
+
+are commonly used.
+
+Azure Remote Backend Architecture
+Terraform
+   ↓
+Azure Storage Account
+   ↓
+Blob Container
+   ↓
+terraform.tfstate
+Benefits Of Remote Backend
+
+✅ Shared state across team
+✅ Centralized management
+✅ Safer collaboration
+✅ Better reliability
+✅ State locking support
+✅ Production-ready workflow
+
+Important Concept
+
+The backend infrastructure itself is usually:
+
+created manually
+OR
+created using Azure CLI/script
+
+NOT managed by the same Terraform project.
+
+Reason:
+
+Terraform cannot store its state
+inside infrastructure that does not exist yet.
+
+This is called:
+
+Backend Bootstrap Problem
+
+----------------------------------------------------------------------
+Scripts:
+1. backend.sh
+
+#!/bin/bash
+
+# Variables
+RESOURCE_GROUP="rg-tf-backend"
+LOCATION="Central India"
+STORAGE_ACCOUNT="tfbackendstatestorage01"
+CONTAINER_NAME="tfstate"
+
+# Create Resource Group
+az group create \
+  --name $RESOURCE_GROUP \
+  --location "$LOCATION"
+
+# Create Storage Account
+az storage account create \
+  --resource-group $RESOURCE_GROUP \
+  --name $STORAGE_ACCOUNT \
+  --sku Standard_LRS
+
+# Get Storage Account Key
+ACCOUNT_KEY=$(az storage account keys list \
+  --resource-group $RESOURCE_GROUP \
+  --account-name $STORAGE_ACCOUNT \
+  --query '[0].value' -o tsv)
+
+# Create Blob Container
+az storage container create \
+  --name $CONTAINER_NAME \
+  --account-name $STORAGE_ACCOUNT \
+  --account-key $ACCOUNT_KEY
+
+echo "Terraform backend storage created successfully."
+
+-------------------------------------------------------
+Terraform Script
+
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.0"
+    }
+  }
+  backend "azurerm" {
+      resource_group_name  = "rg-tf-backend"
+      storage_account_name = "tfbackendstatestorage01"
+      container_name       = "tfstate"
+      key                  = "terraform.tfstate"
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "rg01" {
+  name     = "tf-rg-01"
+  location = "Central India"
+}
+
+resource "azurerm_storage_account" "storage01" {
+  name                     = "tfstorageaccount00021211"
+  resource_group_name      = azurerm_resource_group.rg01.name
+  location                 = azurerm_resource_group.rg01.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+=----------------------------------------------------------------------------
+
+
