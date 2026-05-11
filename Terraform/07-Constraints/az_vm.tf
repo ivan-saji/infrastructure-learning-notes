@@ -15,7 +15,7 @@ resource "azurerm_subnet" "internal" {
   name                 = "internal"
   resource_group_name  = azurerm_resource_group.vm_rg.name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = ["10.0.2.0/24"]
+  address_prefixes     = var.address_space
   
 }
 
@@ -59,7 +59,7 @@ resource "azurerm_virtual_machine" "main" {
   location              = azurerm_resource_group.vm_rg.location
   resource_group_name   = azurerm_resource_group.vm_rg.name
   network_interface_ids = [azurerm_network_interface.main.id]
-  vm_size               = "Standard_B2als_v2"
+  vm_size               = var.vm_info[0]
   
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
@@ -79,7 +79,7 @@ resource "azurerm_virtual_machine" "main" {
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
-    disk_size_gb      = 30
+    disk_size_gb      = var.os_disk_size_gb
     
   }
   os_profile {
