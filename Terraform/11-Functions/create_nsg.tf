@@ -25,5 +25,6 @@ resource "azurerm_network_security_group" "testnsg01" {
 
   tags = {
     environment = "Production"
+    create_date = timestamp()
   }
 }

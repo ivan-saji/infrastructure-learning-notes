@@ -2,6 +2,7 @@ locals {
   common_tags = {
     created_by = "Ivan"
     managed_by = "Terraform"
+    create_date = timestamp()
   }
 
   nsg_rules = {
@@ -23,7 +24,7 @@ locals {
       priority = 120
       port     = 8080
       direction = "Inbound"
-      access   = "Deny"
+      access   = "Allow"
     }
   }
 }
