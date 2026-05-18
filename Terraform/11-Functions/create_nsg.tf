@@ -1,6 +1,6 @@
 resource "azurerm_network_security_group" "testnsg01" {
 # using ternary operator to set the name of NSG based on location variable
-  name                = lower(replace(var.location == "Central India" ? "India NSG" : "OutSide NSG"," ","-"))
+  name                = lower(replace(var.nsg_names[var.environment]," ","-"))
   location            = var.location
   resource_group_name = var.resource_group_name
 
