@@ -1,8 +1,8 @@
 resource "azurerm_network_security_group" "testnsg01" {
 # using ternary operator to set the name of NSG based on location variable
   name                = lower(replace(var.nsg_names[var.environment]," ","-"))
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.config.location
+  resource_group_name = local.config.resource_group_name
 
 #using dynamic block to create security rules based on the local variable nsg_rules which is a map of security rules
   dynamic "security_rule" {

@@ -1,7 +1,7 @@
 resource "azurerm_resource_group" "rg01" {
 
-  name     = var.resource_group_name
-  location = var.location
+  name     = local.config.resource_group_name
+  location = local.config.location
 
   tags = { "create_date" = timestamp() }
 }

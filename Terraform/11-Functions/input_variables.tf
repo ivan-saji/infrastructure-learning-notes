@@ -1,15 +1,5 @@
-variable "resource_group_name" {
-  description = "The name of the resource group to create."
-  type        = string
-  default     = "rg02"
-
-}
-
-variable "location" {
-  description = "The Azure region where resources will be created."
-  type        = string
-  default     = "Central India"
-}
+# resource_group_name and location are loaded from config.json via locals.
+# They are not valid to assign as variable defaults from dynamic expressions.
 
 variable "environment" {
   description = "The environment for which the resources are being created."

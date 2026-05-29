@@ -1,4 +1,6 @@
 locals {
+  config = jsondecode(file("${path.module}/config.json"))
+  
   common_tags = {
     created_by = "Ivan"
     managed_by = "Terraform"
@@ -27,4 +29,5 @@ locals {
       access   = "Allow"
     }
   }
+  
 }
