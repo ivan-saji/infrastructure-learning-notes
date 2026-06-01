@@ -2,17 +2,17 @@ variable "prefix" {
   default = "day13"
 }
 
-resource "azurerm_resource_group" "rg-shared" {
+resource "azurerm_resource_group" "rg-shared-resources" {
   name     = "rg-shared-resources"
   #this will take the location of resource group created in azure and use it for the resource group created by terraform
-  location = data.azurerm_resource_group.rg-shared.location
+  location = data.azurerm_resource_group.rg-shared-resources.location
 }
 
 #using datasources to reference the existing Virtual Network and Subnet present in azure
 
 data "azurerm_virtual_network" "tf-vnet-shared" {
   name                = "tf-vnet-shared"
-  resource_group_name = rg-shared.rg-shared.name
+  resource_group_name = rg-shared-resources.rg-shared-resources.name
 }
 
 data "azurerm_subnet" "tf-vm-subnet" {
@@ -23,8 +23,8 @@ data "azurerm_subnet" "tf-vm-subnet" {
 
 resource "azurerm_network_interface" "main" {
   name                = "${var.prefix}-nic"
-  location            = rg-shared.rg-shared.location
-  resource_group_name = rg-shared.rg-shared.name
+  location            = rg-shared-resources.rg-shared-resources.location
+  resource_group_name = rg-shared-resources.rg-shared-resources.name
 
   ip_configuration {
     name                          = "testconfiguration1"
@@ -35,8 +35,8 @@ resource "azurerm_network_interface" "main" {
 
 resource "azurerm_virtual_machine" "main" {
   name                  = "${var.prefix}-vm"
-  location              = rg-shared.rg-shared.location
-  resource_group_name   = rg-shared.rg-shared.name
+  location              = rg-shared-resources.rg-shared-resources.location
+  resource_group_name   = rg-shared-resources.rg-shared-resources.name
   network_interface_ids = [azurerm_network_interface.main.id]
   vm_size               = "Standard_DS1_v2"
 
