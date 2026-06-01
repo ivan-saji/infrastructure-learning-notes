@@ -1,9 +1,3 @@
-resource "azurerm_network_security_group" "example" {
-  name                = "example-security-group"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
-}
-
 resource "azurerm_virtual_network" "rg02-vnet01-infra" {
   name                = local.vnet_name
   location            = local.location
@@ -11,17 +5,23 @@ resource "azurerm_virtual_network" "rg02-vnet01-infra" {
   address_space       = local.vnet_address_space
 
   subnet {
-    name             = "subnet1"
-    address_prefixes = ["10.0.1.0/24"]
-  }
-
-  subnet {
-    name             = "subnet2"
-    address_prefixes = ["10.0.2.0/24"]
-    security_group   = azurerm_network_security_group.example.id
+    name             = local.subnet1_name
+    address_prefixes = [local.subnet1_address_prefix]
   }
 
   tags = {
-    environment = "Production"
+    environment = local.environment
   }
+}
+
+#Associate NSG to Subnet
+resource "azurerm_subnet_network_security_group_association" "rg02-vnet01-snet01-nsg01-infra" {
+  subnet_id                 = azurerm_virtual_network.rg02-vnet01-infra.subnet.id
+  network_security_group_id = azurerm_network_security_group.rg02-vnet01-snet01-nsg01-infra.id
+}
+
+#Associate Nat Gateway to Subnet
+resource "azurerm_subnet_nat_gateway_association" "rg02-vnet01-snet01-natgw01-infra" {
+  subnet_id      = azurerm_virtual_network.rg02-vnet01-infra.subnet.id
+  nat_gateway_id = azurerm_nat_gateway.example.id
 }
