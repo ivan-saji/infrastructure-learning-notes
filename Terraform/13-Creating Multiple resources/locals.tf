@@ -60,4 +60,10 @@ locals {
   #Nat Gateway Details
   nat_gateway_name = "rg02-vnet01-snet01-natgw01-infra"
 
+  #VMSS Details
+  vmss_name = "rg02-vmss01-infra"
+  vmss_default_capacity = 2
+  vmss_minimum_capacity = 1
+  vmss_maximum_capacity = 5
+
 }
