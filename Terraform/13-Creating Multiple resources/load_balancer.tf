@@ -1,11 +1,3 @@
-# Public IP for Load Balancer
-resource "azurerm_public_ip" "rg02-vnet01-pubip01-infra" {
-  name                = "rg02-vnet01-pubip01-infra"
-  location            = local.location
-  resource_group_name = local.resource_group_name
-  allocation_method   = "Static"
-}
-
 # Load Balancer
 resource "azurerm_lb" "rg02-vnet01-lb01-infra" {
   name                = "rg02-vnet01-lb01-infra"
