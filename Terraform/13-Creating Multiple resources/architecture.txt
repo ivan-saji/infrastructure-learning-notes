@@ -22,9 +22,11 @@ resource group 2 - Required cloud infra resource group
     NAT Gateway : For security updates, private secure connection to internet
         name : rg02-vnet01-snet01-natgw01-infra
 
------- Done---------------
+
     VMSS : Autoscaling VMSS
+    	name : rg02-vmss01-infra
         Autoscaling rules : Default : 2, Minimum : 1, Max :5, CPU > 80% = add VM, CPU < 10% remove VM
+        
 
 
         Public IP : for customers to access VM publically
@@ -34,7 +36,7 @@ resource group 2 - Required cloud infra resource group
         Load Balancer :
             name : rg02-vnet01-lb01-infra
             Allow 80/443
-
+------ Done---------------
 
 
 Part 2:

@@ -39,7 +39,7 @@ resource "azurerm_lb_probe" "rg02-vnet01-lb01-healthprobe01-infra" {
 
 # Load Balancer Rule Front end 80 to Back end 80
 resource "azurerm_lb_rule" "rg02-vnet01-lb01-lbrule01-infra" {
-  name                           = "http rule"
+  name                           = "http_rule"
   loadbalancer_id                = azurerm_lb.rg02-vnet01-lb01-infra.id
   protocol                        = "Tcp"
   frontend_port                   = 80

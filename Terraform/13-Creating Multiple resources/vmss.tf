@@ -36,7 +36,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss01" {
       name    = "internal"
       primary = true
 
-      subnet_id = azurerm_virtual_network.rg02-vnet01-infra.subnet.id
+      subnet_id = azurerm_subnet.rg02-vnet01-snet01-infra.id
 
       load_balancer_backend_address_pool_ids = [
       azurerm_lb_backend_address_pool.rg02-vnet01-lb01-backendpool01-infra.id
