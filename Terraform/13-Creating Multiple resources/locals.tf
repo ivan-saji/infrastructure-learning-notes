@@ -55,6 +55,14 @@ locals {
       access    = "Allow"
 
     }
+
+    allow_lb_health_probe_inbound = {
+      priority  = 101
+      port      = 80
+      direction = "Inbound"
+      access    = "Allow"
+      source    = "AzureLoadBalancer"
+    }
   }
 
   #Nat Gateway Details

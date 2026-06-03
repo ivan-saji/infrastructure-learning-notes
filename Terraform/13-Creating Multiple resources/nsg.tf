@@ -21,7 +21,8 @@ resource "azurerm_network_security_group" "rg02-vnet01-snet01-nsg01-infra" {
         destination_port_range     = security_rule.value.port
 
         #Later update with Load Balancer and Application Gateway IPs
-        source_address_prefix      = "*"
+        source_address_prefix      = security_rule.key == "allow_lb_health_probe_inbound" ? "AzureLoadBalancer" : "*"
+
         destination_address_prefix = "*"
         }
     }
