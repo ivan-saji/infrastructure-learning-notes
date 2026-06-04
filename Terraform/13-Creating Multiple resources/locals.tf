@@ -21,35 +21,35 @@ locals {
 
   nsg01_security_rules = {
     allow_http_inbound = {
-      priority  = 100
+      priority  = 110
       port      = 80
       direction = "Inbound"
       access    = "Allow"
     }
 
     allow_https_inbound = {
-      priority  = 110
+      priority  = 120
       port      = 443
       direction = "Inbound"
       access    = "Allow"
     }
 
     allow_http_outbound = {
-      priority  = 100
+      priority  = 110
       port      = 80
       direction = "Outbound"
       access    = "Allow"
     }
 
     allow_https_outbound = {
-      priority  = 110
+      priority  = 120
       port      = 443
       direction = "Outbound"
       access    = "Allow"
     }
 
     allow_ssh_inbound = {
-      priority  = 120
+      priority  = 130
       port      = 22
       direction = "Inbound"
       access    = "Allow"
@@ -57,7 +57,7 @@ locals {
     }
 
     allow_lb_health_probe_inbound = {
-      priority  = 101
+      priority  = 100
       port      = 80
       direction = "Inbound"
       access    = "Allow"

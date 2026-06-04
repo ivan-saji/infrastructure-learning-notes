@@ -5,7 +5,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss01" {
   resource_group_name = local.resource_group_name
   location            = local.location
 
-  sku       = "Standard_B2s"
+  sku       = "Standard_B1ms"
   instances = local.vmss_default_capacity
 
   admin_username = "adminuser"
