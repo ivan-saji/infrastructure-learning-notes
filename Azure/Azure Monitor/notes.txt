@@ -1,0 +1,30 @@
+1. Create a log analytics workspace
+
+resource "azurerm_log_analytics_workspace" "law01" {
+    name                = "law01"
+    location            = azurerm_resource_group.rg01.location
+    resource_group_name = azurerm_resource_group.rg01.name
+    sku                 = "PerGB2018"
+    retention_in_days   = 30
+}
+
+All logs go to log analytics workspace
+
+2. Install AMA on VMs and components (code to be added in VMSS)
+
+resource "azurerm_virtual_machine_scale_set_extension" "vmss_extension" {
+
+  name                         = "${local.vmss_name}-extension"
+  virtual_machine_scale_set_id = azurerm_linux_virtual_machine_scale_set.vmss01.id
+  publisher                    = "Microsoft.Azure.Monitor"
+  type                         = "AzureMonitorLinuxAgent"
+  type_handler_version         = "1.10"
+  auto_upgrade_minor_version   = true 
+}
+
+3. Data collection Rules 
+Tell Azure what to collect
+
+4. Setup Alerts
+
+5. Dashboard view
