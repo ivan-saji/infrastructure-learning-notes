@@ -2,7 +2,7 @@ resource "azurerm_resource_group" "rg02" {
   name     = "rg02-vnet-peering"
   location = "East US"
 }
-
+#-------------------------------------------------------------------
 #Virtual Network 1
 resource "azurerm_virtual_network" "vnet01" {
   name                = "vnet01"
@@ -12,13 +12,14 @@ resource "azurerm_virtual_network" "vnet01" {
 }
 
 #Subnet in VNet 1
-resource "azurerm_subnet" "subnet01" {
-  name                 = "subnet01"
+resource "azurerm_subnet" "vnet01-default-subnet" {
+  name                 = "vnet01-default-subnet"
   resource_group_name  = azurerm_resource_group.rg02.name
   virtual_network_name = azurerm_virtual_network.vnet01.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
+#----------------------------------------------------------------------
 
 #Virtual Network 2
 resource "azurerm_virtual_network" "vnet02" {
@@ -29,8 +30,8 @@ resource "azurerm_virtual_network" "vnet02" {
 }
 
 #Subnet in VNet 2
-resource "azurerm_subnet" "subnet02" {
-  name                 = "subnet02"
+resource "azurerm_subnet" "vnet02-default-subnet" {
+  name                 = "vnet02-default-subnet"
   resource_group_name  = azurerm_resource_group.rg02.name
   virtual_network_name = azurerm_virtual_network.vnet02.name
   address_prefixes     = ["10.1.1.0/24"]
