@@ -37,7 +37,7 @@ resource "azurerm_virtual_machine" "vm01" {
     disk_size_gb      = 30
   }
   os_profile {
-    computer_name  = "hostname"
+    computer_name  = "vm01"
     admin_username = "testadmin"
     admin_password = "Password1234!"
   }
@@ -93,7 +93,7 @@ resource "azurerm_virtual_machine" "vm02" {
     disk_size_gb      = 30
   }
   os_profile {
-    computer_name  = "hostname"
+    computer_name  = "vm02"
     admin_username = "testadmin"
     admin_password = "Password1234!"
   }
