@@ -1,6 +1,4 @@
 first_name,last_name,department,job_title
 John,Smith,Engineering,Manager
-Sarah,Johnson,Marketing,Manager
-Michael,Williams,Sales,Engineer
-Emily,Brown,Human Resources,Engineer
-David,Miller,Finance,Engineer
+Sarah,Johnson,Engineering,Engineer
+Michael,Williams,Engineering,Engineer
