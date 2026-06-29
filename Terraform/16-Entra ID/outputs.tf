@@ -6,3 +6,7 @@ output "azuread_domains" {
 output "user_name_from_fromList" {
   value = [for user in local.users_list : "${user.first_name}"]
 }
+
+output "user_department_from_fromList" {
+  value = [for dept in local.departments_list : dept]
+}
