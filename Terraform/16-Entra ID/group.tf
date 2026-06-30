@@ -5,9 +5,15 @@ resource "azuread_group" "department" {
   display_name     = each.value
   security_enabled = true
 
-  #Enable dynamic membership for the group based on the department
-  types = ["DynamicMembership"]
+}
 
-  #define the rule for dynamic membership based on the department
-  rule = "user.department -eq \"${each.value}\" and user.accountEnabled -eq true"
+resource "azuread_group_member" "department_members" {
+
+  for_each = {
+    for user in local.users_list :
+    user.first_name => user
   }
+
+  group_object_id  = azuread_group.department[each.value.department].object_id
+  member_object_id = azuread_user.user[each.value.first_name].object_id
+ }
