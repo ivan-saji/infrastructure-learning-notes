@@ -12,3 +12,11 @@ terraform {
     }
   }
 }
+
+provider "azuread" {}
+
+provider "azurerm" {
+  features {}
+
+  subscription_id = "86325090-0264-4868-9a75-0df86c5f215f"
+}
