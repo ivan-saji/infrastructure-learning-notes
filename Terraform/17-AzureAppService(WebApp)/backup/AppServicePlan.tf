@@ -29,3 +29,17 @@ resource "azurerm_linux_web_app_slot" "asp1_webapp_slot" {
   site_config {}
 }
 
+#Create the deployment for production
+
+resource "azurerm_app_source_control" "asp1_webapp_source_control" {
+  app_id                = azurerm_linux_web_app.asp1_webapp.id
+  branch                = "main"
+  repo_url              = "https://github.com/your-repo/your-app.git"
+}
+
+#create the deployment for staging slot
+resource "azurerm_app_source_control" "asp1_webapp_staging_slot_source_control" {
+  app_id                = azurerm_linux_web_app_slot.asp1_webapp_slot.id
+  branch                = "staging"
+  repo_url              = "https://github.com/your-repo/your-app.git"
+}
