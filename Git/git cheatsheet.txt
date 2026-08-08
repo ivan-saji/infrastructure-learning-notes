@@ -1,0 +1,29 @@
+To initialize git in a folder
+>> git init
+
+To check status of git
+>> git status
+
+To add a file to tracking (To stage the file for commit)
+>> git add <filename>
+
+To remove file from tracking (Unstage the file)
+>> git rm --cached <file>
+
+To check the history
+>> git log
+To get a shorter version
+>> git log --oneline
+
+To show what changes occured (Shows what files are modified)
+>> git show
+
+To show exactly what has changed (Shows what are the modifications done in each file. like a comparison)
+>> git diff
+
+To restore a file
+>> git restore <filename>
+
+Once Staged, but to see the difference
+>> git diff --Staged
+
