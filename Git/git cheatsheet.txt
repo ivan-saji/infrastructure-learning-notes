@@ -27,3 +27,42 @@ To restore a file
 Once Staged, but to see the difference
 >> git diff --Staged
 
+To temporarily switch back to an old commit
+>>git switch --detach <commitID>
+
+To switch back to master/main (latest)
+>> git switch <main/master>
+
+You don't want commit 3 due to some issue. Now you want to have commit 2 as latest (like a rollback). 
+This deletes the git history too
+>> git reset --hard <commitID>
+
+If you want to rollback but preserve the history. Git creates a new commit that reverses to D
+>>git revert <commitID>
+
+If we revert and we mess up
+>> git reflog
+
+Git rename a branch to main
+>>git branch -M main
+
+Branches in git
+
+Create a new branch and switch to it immediately
+>>git switch -c staging
+
+List all the Branches
+>> git branch
+
+To switch to main / staging if branch already present
+>> git switch <main/staging>
+
+
+Merge staging to main
+Suppose if the changes made in staging is production ready, and we feel this can be pushed to main
+1. Switch and be in main
+>> git switch main
+2. check if nothing is pending to commit
+>> git status
+3. Merge staging to main
+>> git merge staging
