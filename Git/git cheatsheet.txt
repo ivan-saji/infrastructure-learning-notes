@@ -88,3 +88,19 @@ Once repository is connected, to push our branch to github
 Once we have pushes made for each local branches to origin, "git branch -a" shows local branches as well as remote origin
 After remote origins are present, all we have to do is git push while in the branch to push changes to remote instead of git push origin staging
 >>git push
+
+Git Fetch and Git pull
+
+Suppose if some changes are made on remote side, the local won't be aware of the changes.
+You can use git fetch to check the remote and let the local git know what all changes are made provided you are in the same branch
+>>git fetch
+
+If you want to see the difference between both local and remote
+>> git diff origin/staging
+
+You can also compare with main or other branches
+>> git diff origin/main
+
+To bring the changes to our local
+>> git pull
+
