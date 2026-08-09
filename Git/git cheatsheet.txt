@@ -66,3 +66,25 @@ Suppose if the changes made in staging is production ready, and we feel this can
 >> git status
 3. Merge staging to main
 >> git merge staging
+
+
+Github and remote git repository management
+
+To check git remote repository connected. returns nothing if not connected
+>> git remote
+
+To connect to a remote repository
+>> git remote add origin
+This connects to a remote github repository created. git remote -v can be used to check cnnection
+
+Once repository is connected, to push our branch to github
+1. Check which branch is active Now
+>> git branch
+2. Check pending changes or anything left to commit
+>> git status
+3. Push main to remote
+>> git push -u origin main
+
+Once we have pushes made for each local branches to origin, "git branch -a" shows local branches as well as remote origin
+After remote origins are present, all we have to do is git push while in the branch to push changes to remote instead of git push origin staging
+>>git push
