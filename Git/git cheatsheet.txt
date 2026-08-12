@@ -104,3 +104,5 @@ You can also compare with main or other branches
 To bring the changes to our local
 >> git pull
 
+Suppose we messed up our staging and main is fine. We want to revert everything in main to staging
+>> git reset --hard main
