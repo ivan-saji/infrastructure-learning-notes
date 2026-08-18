@@ -1,0 +1,6 @@
+Tail the container logs
+
+az webapp log tail \
+  --name ivan-appservice-lab \
+  --resource-group rg-appservice-lab \
+  --slot staging
