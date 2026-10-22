@@ -16,3 +16,13 @@ resource "azurerm_resource_group" "rg_test1" {
   name     = "testrg1"
   location = "West Europe"
 }
+
+resource "azurerm_resource_group" "rg_test2" {
+  name     = "testrg2"
+  location = "Canada Central"
+
+  tags = {
+    department = "IT"
+    project    = "Terraform"
+  }
+}
