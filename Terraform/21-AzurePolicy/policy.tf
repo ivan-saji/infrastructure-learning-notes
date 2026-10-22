@@ -83,7 +83,7 @@ resource "azurerm_policy_definition" "locationpolicy" {
       effect = "deny"
     }
   })
-  
+
 }
 
 
