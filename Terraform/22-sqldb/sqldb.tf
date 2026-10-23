@@ -23,6 +23,6 @@ resource "azurerm_mssql_database" "db01" {
 resource "azurerm_mssql_firewall_rule" "fw01" {
   name                = "fw01-sqldb"
   server_id           = azurerm_mssql_server.sql01.id
-  start_ip_address    = "49.37.233.60"
-  end_ip_address      = "49.37.233.60"
+  start_ip_address    = "49.37.232.57"
+  end_ip_address      = "49.37.232.57"
 }
